@@ -4,7 +4,7 @@ import 'package:superexpress/app/pages/login/login.page.dart';
 void main() {
   runApp(
     MaterialApp(
-      home: LoginPage(),
+      home: LoginPage(title: "Login"),
       // estou aqui aquiuuiiii
     ),
   );
