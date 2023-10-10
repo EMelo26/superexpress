@@ -4,7 +4,7 @@ const db = require('../database/mysql').pool;
 const bcrypt = require('bcrypt');
 
 // Rota de login
-router.post('/login', async (req, res) => {
+router.post('/users', async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -27,6 +27,36 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Rota para mostrar todos os usuários
+router.get('/users', async (req, res) => {
+  try {
+    const users = await getAllUsersFromDatabase(); // Implemente esta função para buscar todos os usuários
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Erro no servidor' });
+  }
+});
+
+// Rota para mostrar um usuário por ID
+router.get('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await getUserByIdFromDatabase(userId); // Implemente esta função para buscar um usuário por ID
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Erro no servidor' });
+  }
+});
+
 async function getUserByUsername(username) {
   return new Promise((resolve, reject) => {
     db.getConnection((err, conn) => {
@@ -35,7 +65,7 @@ async function getUserByUsername(username) {
       }
 
       conn.query(
-        'SELECT * FROM projetotcc.user_acesso WHERE username = ?',
+        'SELECT * FROM projetotcc.login WHERE username = ?',
         [username],
         (error, results, fields) => {
           conn.release();
@@ -52,6 +82,16 @@ async function getUserByUsername(username) {
       );
     });
   });
+}
+
+// Implemente a função para buscar todos os usuários no banco de dados
+async function getAllUsersFromDatabase() {
+  // Sua lógica para consultar e retornar todos os usuários aqui
+}
+
+// Implemente a função para buscar um usuário por ID no banco de dados
+async function getUserByIdFromDatabase(userId) {
+  // Sua lógica para consultar e retornar um usuário por ID aqui
 }
 
 module.exports = router;

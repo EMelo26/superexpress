@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:superexpress/app/pages/home/productList.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,22 @@ class Home extends StatelessWidget {
               ],
             )),
       ),
-      body:
+      body: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Login',
+            ),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Senha',
+            ),
+            obscureText: true,
+          ),
           const ProductList(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

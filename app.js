@@ -29,6 +29,10 @@ app.use('/produtos', produtosRoutes);
 const pedidosRoutes = require('./routes/pedidos');
 app.use('/pedidos', pedidosRoutes);
 
+// Roteamento de usuários
+const usersRoutes = require('./routes/users'); // Importe o módulo users.js da pasta routes
+app.use('/users', usersRoutes); // Defina uma rota base para os endpoints de usuário
+
 // Tratamento de erro para rota não encontrada
 app.use((req, res, next) => {
     const erro = new Error("Não encontrado");

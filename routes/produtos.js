@@ -33,9 +33,9 @@ router.get('/todos', (req, res, next) => {
 // Rota para cadastrar um novo produto
 router.post('/', upload.single('produto_image'), async (req, res, next) => {
     try {
-        const novoProduto = [req.body.name, req.body.preco];
+        const novoProduto = [req.body.name, req.body.descricao, req.body.preco]; // Correção aqui
         const conn = await db.getConnection();
-        const resultado = await conn.query("INSERT INTO projetotcc.produtos(nome, descricao, preco) VALUES (?, ?)", novoProduto);
+        const resultado = await conn.query("INSERT INTO projetotcc.produtos(nome, descricao, preco) VALUES (?, ?, ?)", novoProduto); // Correção aqui
         conn.release();
         res.status(200).json({ mensagem: 'Novo Produto Cadastrado', data: resultado });
     } catch (error) {
